@@ -8,7 +8,7 @@ import java.util.Scanner;
  * Steven Pride
  * CEN 3024 - Software Development I
  * 10/12/2025
- * LibraryApp
+ * LudaVaultApp
  * Console application for the LudaVault Data Management System to allow collectors to manage their board games.
  * Users can import games from a text file, create games manually, display, search, update, delete, and compute
  * a custom TRS (Table Resistance Score). This class performs input validation to avoid crashes. Subclasses will
