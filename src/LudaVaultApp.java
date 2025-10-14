@@ -180,7 +180,7 @@ public class LudaVaultApp {
     public String createGame()
     {
         //Get the game ID from the user
-        int gameId = getGameId();
+        int gameId = getGameId(true);
         if(gameId == -1)
             return "";
 
@@ -274,7 +274,7 @@ public class LudaVaultApp {
     public String retrieveGame()
     {
         //Get the game ID from the user
-        int gameId = getGameId();
+        int gameId = getGameId(false);
         if(gameId == -1)
             return "";
 
@@ -293,7 +293,7 @@ public class LudaVaultApp {
     public String updateGame()
     {
         //Get the game ID from the user
-        int gameId = getGameId();
+        int gameId = getGameId(false);
         if(gameId == -1)
             return "";
 
@@ -329,6 +329,7 @@ public class LudaVaultApp {
                 System.out.println("Invalid input. Please enter a valid number");
                 continue;
             }
+
             if(!gameManager.validateGreaterThanZero(maxPlayers)) {
                 System.out.println("Maximum number of players must be greater than 0");
             }
@@ -347,8 +348,13 @@ public class LudaVaultApp {
                 else {
                     playTime = Integer.parseInt(sPlayTime);
                 }
+
             } catch (Exception e) {
                 System.out.println("Invalid input. Please enter a valid number");
+            }
+
+            if(!gameManager.validateGreaterThanZero(playTime)) {
+                System.out.println("Play time must be greater than 0");
             }
         }
 
@@ -368,6 +374,10 @@ public class LudaVaultApp {
             } catch (Exception e) {
                 System.out.println("Invalid input. Please enter a valid number");
             }
+
+            if(!gameManager.validateRange(1, 5, weight)) {
+                System.out.println("Weight must be between 0 and 5");
+            }
         }
 
         //Request if the game is an expansion until the user enters 'yes' or 'no'
@@ -383,9 +393,12 @@ public class LudaVaultApp {
             } else if (response.equalsIgnoreCase("no") || response.equalsIgnoreCase("n")) {
                 isExpansion = false;
                 expansion = "No";
-            } else {
+            } else if (response.isBlank()){
                 isExpansion = game.getIsExpansion();
                 expansion = "Unchanged";
+            }
+            else {
+                System.out.println("Invalid input. Please enter 'yes' or 'no'");
             }
         }
 
@@ -408,7 +421,7 @@ public class LudaVaultApp {
     public String deleteGame()
     {
         //Get the game ID from the user
-        int gameId = getGameId();
+        int gameId = getGameId(false);
         if(gameId == -1)
             return "";
 
@@ -449,7 +462,7 @@ public class LudaVaultApp {
     public String calculateTRS()
     {
         //Get the game ID from the user
-        int gameId = getGameId();
+        int gameId = getGameId(false);
         if(gameId == -1)
             return "";
 
@@ -464,16 +477,16 @@ public class LudaVaultApp {
 
     /**
      * method: getGameId
-     * parameters: none
+     * parameters: boolean isCreate - true if the game ID is being requested for a new game
      * return: int
      * purpose: Gets a valid game ID from the user, or returns -1 if the user types exit.
      */
-    private int getGameId()
+    private int getGameId(boolean isCreate)
     {
         int gameId = 0;
 
         //Check if the collection is empty and return -1 if it is
-        if(gameManager.validateCollectionIsEmpty())
+        if(gameManager.validateCollectionIsEmpty() && !isCreate)
             return -1;
 
         //Request the game ID from the user until a valid number is entered

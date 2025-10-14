@@ -45,9 +45,15 @@ public class GameHashMap implements GameDataStore {
      * purpose: Adds a board game to the data store.
      */
     @Override
-    public boolean put(int in, BoardGame game) {
-
-        return boardGameCollection.put(in, game) != null;
+    public boolean put(int in, BoardGame game)
+    {
+        try {
+            boardGameCollection.put(in, game);
+            return true;
+        }
+        catch (Exception e) {
+            return false;
+        }
     }
 
     /**
@@ -58,7 +64,13 @@ public class GameHashMap implements GameDataStore {
      */
     @Override
     public boolean put(BoardGame game) {
-        return boardGameCollection.put(game.getGameId(), game) != null;
+        try {
+            boardGameCollection.put(game.getGameId(), game);
+            return true;
+        }
+        catch (Exception e) {
+            return false;
+        }
     }
 
     /**
