@@ -468,7 +468,7 @@ public class LudaVaultApp {
 
         //Retrieve the game from the collection
         BoardGame game = gameManager.retrieveGame(gameId);
-        if(gameId != 0)
+        if(game != null)
             //Execute the gameManager calculateTRS method and return the results
             return String.format("The table resistance score for %s is %.2f", game.getTitle(), gameManager.calculateTRS(game));
         else
