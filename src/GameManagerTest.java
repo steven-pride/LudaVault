@@ -118,6 +118,13 @@ class GameManagerTest {
     }
 
     @Test
+    void deleteGameTestFails() {
+        boolean isDeleted = gameManager.deleteGame(10);
+        assertTrue(isDeleted);
+        assertNull(gameManager.retrieveGame(10));
+    }
+
+    @Test
     void listGames() {
         String sampleData = "1,Azul,4,60,2.2,false\n2,Gloomhaven,4,240,3.8,false\n3,Twilight Imperium,6,480,4.5,false";
         HashMap<String, String> results = gameManager.bulkImport(sampleData.getBytes());

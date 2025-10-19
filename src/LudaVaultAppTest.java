@@ -49,12 +49,19 @@ class LudaVaultAppTest {
         LudaVaultApp app = new LudaVaultApp();
         String result = app.bulkImport();
         assertEquals("File does not exist", result);
-
     }
 
     @Test
     void createGameNoErrors() {
         System.setIn(new ByteArrayInputStream("1\nAzul\n4\n45\n2.2\nNo\n".getBytes()));
+        LudaVaultApp app = new LudaVaultApp();
+        String result = app.createGame();
+        assertTrue(result.startsWith("Azul added to your collection"));
+    }
+
+    @Test
+    void createGameHasErrors() {
+        System.setIn(new ByteArrayInputStream("1\nAzul\n4\n45\n7.2\n2.2\nNo\n".getBytes()));
         LudaVaultApp app = new LudaVaultApp();
         String result = app.createGame();
         assertTrue(result.startsWith("Azul added to your collection"));
