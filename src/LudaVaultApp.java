@@ -122,7 +122,7 @@ public class LudaVaultApp {
         StringBuilder builder = new StringBuilder();
         builder.append("Please select an option:\n");
         builder.append("1. Import Board Game File\n");
-        builder.append("2. Create new Board Game\n");
+        builder.append("2. Create New Board Game\n");
         builder.append("3. Retrieve Board Game\n");
         builder.append("4. Update Board Game\n");
         builder.append("5. Remove Board Game\n");
@@ -468,7 +468,7 @@ public class LudaVaultApp {
 
         //Retrieve the game from the collection
         BoardGame game = gameManager.retrieveGame(gameId);
-        if(gameId != 0)
+        if(game != null)
             //Execute the gameManager calculateTRS method and return the results
             return String.format("The table resistance score for %s is %.2f", game.getTitle(), gameManager.calculateTRS(game));
         else
@@ -500,6 +500,11 @@ public class LudaVaultApp {
                 }
                 else {
                     gameId = Integer.parseInt(sGameId);
+                    if (isCreate && gameId != 0 && gameManager.retrieveGame(gameId) != null)
+                    {
+                        gameId = 0;
+                        System.out.println("Game ID already exists. Please enter a new ID");
+                    }
                 }
             } catch (Exception e) {
                 System.out.println("Invalid input. Please enter a valid number");
