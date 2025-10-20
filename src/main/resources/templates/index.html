@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/LudaVaultStyle.css">
+</head>
+<body>
+<header>
+    <h1>Luda Vault</h1>
+</header>
+<main>
+    <div class="menu-bar">
+        <nav>
+            <ul>
+                <li><a href="#"><button>Create New</button></a></li>
+                <li><a href="#"><button>Bulk Import</button></a></li>
+                <li><a href="#"><button>Remove Game</button></a></li>
+            </ul>
+        </nav>
+    </div>
+    <div class="list">
+        <table id="game-list">
+            <tr th:each="game : ${games}">
+                <td th:text="${game.gameId}"></td>
+                <td th:text="${game.title}"></td>
+                <td th:text="${game.maxPlayers}"></td>
+                <td th:text="${game.playTime}"></td>
+                <td th:text="${game.weight}"></td>
+                <td th:text="${game.isExpansion}"></td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(games)}">
+                <td colspan="5">No games found</td>
+            </tr>
+        </table>
+    </div>
+    <div class="game-form">
+        <form id="game-form" method="post" action="/createGame" th:object="${newGame}">
+            <div class="row">
+            <label for="gameId">Id:</label>
+            <input type="number" min="1" step="1" th:field="*{gameId}" id="gameId" name="gameId" required />
+            </div>
+            <div class="row">
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" th:field="*{title}" required />
+            </div>
+            <div class="row">
+            <label for="maxPlayers">Max Players:</label>
+            <input type="number" min="1" step="1" th:field="*{maxPlayers}" id="maxPlayers" name="maxPlayers" required />
+            </div>
+            <div class="row">
+            <label for="playTime">Play Time:</label>
+            <input type="number" min="1" step="1" th:field="*{playTime}" id="playTime" name="playTime" required />
+            </div>
+            <div class="row">
+            <label for="weight">Weight (Complexity):</label>
+            <input type="number" min="1" step="0.1" th:field="*{weight}" id="weight" name="weight" required />
+            </div>
+            <div class="row">
+            <label for="isExpansion">Is Expansion:</label>
+            <input type="checkbox" th:field="*{isExpansion}" id="isExpansion" name="isExpansion" />
+            </div>
+            <div class="row">
+            <button type="submit">Create</button>
+            </div>
+        </form>
+    </div>
+</main>
+</body>
+</html>

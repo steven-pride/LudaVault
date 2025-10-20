@@ -1,3 +1,5 @@
+package com.ludavault.LudaVault;
+
 import java.io.File;
 import java.nio.file.Files;
 import java.util.ArrayList;
@@ -8,28 +10,28 @@ import java.util.Scanner;
  * Steven Pride
  * CEN 3024 - Software Development I
  * 10/12/2025
- * LudaVaultApp
+ * main.java.com.ludavault.LudaVault.LudaVaultAppOld
  * Console application for the LudaVault Data Management System to allow collectors to manage their board games.
  * Users can import games from a text file, create games manually, display, search, update, delete, and compute
  * a custom TRS (Table Resistance Score). This class performs input validation to avoid crashes. Subclasses will
  * be called, with results displayed to the user by this class.
  */
-public class LudaVaultApp {
+public class LudaVaultAppOld {
     /**
      * Class attributes:
-     *     gameManager: GameManager - an instance of the GameManager class to manage game data
+     *     gameManager: main.java.com.ludavault.LudaVault.GameManager - an instance of the main.java.com.ludavault.LudaVault.GameManager class to manage game data
      *     userInput: Scanner - an instance of the Scanner class to capture user inputs
      */
     private GameManager gameManager;
     private Scanner userInput;
 
     /**
-     * constructor: LudaVaultApp
+     * constructor: main.java.com.ludavault.LudaVault.LudaVaultAppOld
      * parameters: none
-     * return: LudaVaultApp
-     * purpose: Initializes the GameManager and Scanner
+     * return: main.java.com.ludavault.LudaVault.LudaVaultAppOld
+     * purpose: Initializes the main.java.com.ludavault.LudaVault.GameManager and Scanner
      */
-    public LudaVaultApp()
+    public LudaVaultAppOld()
     {
         gameManager = new GameManager();
         userInput = new Scanner(System.in);
@@ -44,7 +46,7 @@ public class LudaVaultApp {
     public static void main(String[] args)
     {
         //Launch new instance of LudaVault
-        LudaVaultApp app = new LudaVaultApp();
+        LudaVaultAppOld app = new LudaVaultAppOld();
         //Run LudaVault until an exit code is returned
         int exitCode = app.run();
         System.exit(exitCode);

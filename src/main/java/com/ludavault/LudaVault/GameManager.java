@@ -1,3 +1,5 @@
+package com.ludavault.LudaVault;
+
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -9,7 +11,7 @@ import java.util.HashMap;
  * Steven Pride
  * CEN 3024 - Software Development I
  * 10/12/2025
- * GameManager
+ * main.java.com.ludavault.LudaVault.GameManager
  * Provides the core business logic for LudaVault (Business Logic Layer).
  * Provides methods for importing board game data from a file, creating new board games,
  * retrieving board games, updating board games, deleting board games, listing all board games,
@@ -18,15 +20,15 @@ import java.util.HashMap;
 public class GameManager {
     /**
      * Class attributes:
-     *     gameDataStore: GameDataStore - an instance of the GameDataStore interface to manage the board game collection
+     *     gameDataStore: main.java.com.ludavault.LudaVault.GameDataStore - an instance of the main.java.com.ludavault.LudaVault.GameDataStore interface to manage the board game collection
      */
     private GameDataStore gameDataStore;
 
     /**
-     * constructor: GameManager
+     * constructor: main.java.com.ludavault.LudaVault.GameManager
      * parameters: none
-     * return: GameManager
-     * purpose: Initializes the gameDataStore with a new GameHashMap instance.
+     * return: main.java.com.ludavault.LudaVault.GameManager
+     * purpose: Initializes the gameDataStore with a new main.java.com.ludavault.LudaVault.GameHashMap instance.
      */
     public GameManager()
     {
@@ -38,7 +40,7 @@ public class GameManager {
      * parameters: byte[] fileBytes
      * return: HashMap<String, String>
      * purpose: Imports board game data from a byte array, splitting each line into an array of strings,
-     *          creating a new BoardGame object, and putting the new BoardGame object into the gameDataStore.
+     *          creating a new main.java.com.ludavault.LudaVault.BoardGame object, and putting the new main.java.com.ludavault.LudaVault.BoardGame object into the gameDataStore.
      *          Returns a HashMap with success count and error messages.
      */
     public HashMap<String, String> bulkImport(byte[] fileBytes)
@@ -82,10 +84,10 @@ public class GameManager {
                         throw new IllegalArgumentException("Expansion must be true or false");
                     }
 
-                    //create a new BoardGame object
+                    //create a new main.java.com.ludavault.LudaVault.BoardGame object
                     BoardGame game = new BoardGame(Integer.parseInt(gameData[0]), gameData[1], Integer.parseInt(gameData[2]), Integer.parseInt(gameData[3]), Double.parseDouble(gameData[4]), Boolean.parseBoolean(gameData[5]));
 
-                    //put the new BoardGame object into the gameDataStore
+                    //put the new main.java.com.ludavault.LudaVault.BoardGame object into the gameDataStore
                     gameDataStore.put(game);
                     SuccessCount++;
                 } catch (Exception e) {
@@ -114,7 +116,7 @@ public class GameManager {
      *             double weight - the weight of the new board game
      *             boolean isExpansion - whether the new board game is an expansion
      * return: boolean
-     * purpose: Creates a new BoardGame object and puts it into the gameDataStore.
+     * purpose: Creates a new main.java.com.ludavault.LudaVault.BoardGame object and puts it into the gameDataStore.
      *          Returns true if successful, false otherwise.
      */
     public boolean createGame(int gameId, String title, int maxPlayers, int playTime, double weight, boolean isExpansion)
@@ -126,9 +128,9 @@ public class GameManager {
     /**
      * method: retrieveGame
      * parameters: int gameId - the ID of the board game to retrieve
-     * return: BoardGame
-     * purpose: Retrieves a BoardGame object from the gameDataStore based on the provided gameId.
-     *          Returns the BoardGame object if found, null otherwise.
+     * return: main.java.com.ludavault.LudaVault.BoardGame
+     * purpose: Retrieves a main.java.com.ludavault.LudaVault.BoardGame object from the gameDataStore based on the provided gameId.
+     *          Returns the main.java.com.ludavault.LudaVault.BoardGame object if found, null otherwise.
      */
     public BoardGame retrieveGame(int gameId)
     {
@@ -151,7 +153,7 @@ public class GameManager {
      *             double weight - the weight of the board game
      *             boolean isExpansion - whether the board game is an expansion
      * return: boolean
-     * purpose: Updates an existing BoardGame object in the gameDataStore based on the provided gameId.
+     * purpose: Updates an existing main.java.com.ludavault.LudaVault.BoardGame object in the gameDataStore based on the provided gameId.
      *          Returns true if successful, false otherwise.
      */
     public boolean updateGame(int gameId, String title, int maxPlayers, int playTime, double weight, boolean isExpansion)
@@ -176,7 +178,7 @@ public class GameManager {
      * method: deleteGame
      * parameters: int gameId - the ID of the board game to delete
      * return: boolean
-     * purpose: Deletes a BoardGame object from the gameDataStore based on the provided gameId.
+     * purpose: Deletes a main.java.com.ludavault.LudaVault.BoardGame object from the gameDataStore based on the provided gameId.
      *          Returns true if successful, false otherwise.
      */
     public boolean deleteGame(int gameId)
@@ -193,9 +195,9 @@ public class GameManager {
 
     /**
      * method: listGames
-     * return: ArrayList<BoardGame>
-     * purpose: Retrieves all BoardGame objects from the gameDataStore.
-     *          Returns an ArrayList containing all BoardGame objects.
+     * return: ArrayList<main.java.com.ludavault.LudaVault.BoardGame>
+     * purpose: Retrieves all main.java.com.ludavault.LudaVault.BoardGame objects from the gameDataStore.
+     *          Returns an ArrayList containing all main.java.com.ludavault.LudaVault.BoardGame objects.
      */
     public ArrayList<BoardGame> listGames()
     {
@@ -204,9 +206,9 @@ public class GameManager {
 
     /**
      * method: calculateTRS
-     * parameters: BoardGame game - the board game to calculate TRS for
+     * parameters: main.java.com.ludavault.LudaVault.BoardGame game - the board game to calculate TRS for
      * return: double
-     * purpose: Calculates the TRS (Total Rating Score) for a given BoardGame object.
+     * purpose: Calculates the TRS (Total Rating Score) for a given main.java.com.ludavault.LudaVault.BoardGame object.
      *          Returns the calculated TRS value.
      */
     public double calculateTRS(BoardGame game)

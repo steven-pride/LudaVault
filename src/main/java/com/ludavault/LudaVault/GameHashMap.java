@@ -1,3 +1,5 @@
+package com.ludavault.LudaVault;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -5,22 +7,22 @@ import java.util.HashMap;
  * Steven Pride
  * CEN 3024 - Software Development I
  * 10/12/2025
- * GameHashMap
- * Implements the GameDataStore interface using a HashMap<Integer, BoardGame> for in memory storage of
+ * main.java.com.ludavault.LudaVault.GameHashMap
+ * Implements the main.java.com.ludavault.LudaVault.GameDataStore interface using a HashMap<Integer, main.java.com.ludavault.LudaVault.BoardGame> for in memory storage of
  * a board game collection.
  */
 public class GameHashMap implements GameDataStore {
     /**
      * Class attributes:
-     *     boardGameCollection: HashMap<Integer, BoardGame> - the collection of board games.
+     *     boardGameCollection: HashMap<Integer, main.java.com.ludavault.LudaVault.BoardGame> - the collection of board games.
      */
     private static HashMap<Integer, BoardGame> boardGameCollection;
 
     /**
-     * constructor: GameHashMap
+     * constructor: main.java.com.ludavault.LudaVault.GameHashMap
      * parameters: none
-     * return: GameHashMap
-     * purpose: Initializes the boardGameCollection as a HashMap<Integer, BoardGame>.
+     * return: main.java.com.ludavault.LudaVault.GameHashMap
+     * purpose: Initializes the boardGameCollection as a HashMap<Integer, main.java.com.ludavault.LudaVault.BoardGame>.
      */
     public GameHashMap() {
         boardGameCollection = new HashMap<>();
@@ -29,7 +31,7 @@ public class GameHashMap implements GameDataStore {
     /**
      * method: get
      * parameters: int in - the ID of the board game to retrieve
-     * return: BoardGame
+     * return: main.java.com.ludavault.LudaVault.BoardGame
      * purpose: Retrieves a board game by its ID.
      */
     @Override
@@ -40,7 +42,7 @@ public class GameHashMap implements GameDataStore {
     /**
      * method: put
      * parameters: int in - the ID of the board game to add
-     *             BoardGame game - the board game to add
+     *             main.java.com.ludavault.LudaVault.BoardGame game - the board game to add
      * return: boolean
      * purpose: Adds a board game to the data store.
      */
@@ -58,7 +60,7 @@ public class GameHashMap implements GameDataStore {
 
     /**
      * method: put
-     * parameters: BoardGame game - the board game to add
+     * parameters: main.java.com.ludavault.LudaVault.BoardGame game - the board game to add
      * return: boolean
      * purpose: Adds a board game to the data store.
      */
@@ -88,7 +90,7 @@ public class GameHashMap implements GameDataStore {
     /**
      * method: getAll
      * parameters: none
-     * return: ArrayList<BoardGame>
+     * return: ArrayList<main.java.com.ludavault.LudaVault.BoardGame>
      * purpose: Retrieves all board games in the data store.
      */
     @Override

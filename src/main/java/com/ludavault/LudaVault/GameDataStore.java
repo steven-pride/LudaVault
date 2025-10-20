@@ -1,17 +1,19 @@
+package com.ludavault.LudaVault;
+
 import java.util.ArrayList;
 
 /**
  * Steven Pride
  * CEN 3024 - Software Development I
  * 10/12/2025
- * Interface: GameDataStore
+ * Interface: main.java.com.ludavault.LudaVault.GameDataStore
  * Defines the contract for a data store that manages board games.
  */
 public interface GameDataStore {
     /**
      * method: get
      * parameters: int in - the ID of the board game to retrieve
-     * return: BoardGame
+     * return: main.java.com.ludavault.LudaVault.BoardGame
      * purpose: Retrieves a board game by its ID.
      */
     public BoardGame get(int in);
@@ -19,7 +21,7 @@ public interface GameDataStore {
     /**
      * method: put
      * parameters: int in - the ID of the board game to add
-     *             BoardGame game - the board game to add
+     *             main.java.com.ludavault.LudaVault.BoardGame game - the board game to add
      * return: boolean
      * purpose: Adds a board game to the data store.
      */
@@ -27,7 +29,7 @@ public interface GameDataStore {
 
     /**
      * method: put
-     * parameters: BoardGame game - the board game to add
+     * parameters: main.java.com.ludavault.LudaVault.BoardGame game - the board game to add
      * return: boolean
      * purpose: Adds a board game to the data store.
      */
@@ -44,7 +46,7 @@ public interface GameDataStore {
     /**
      * method: getAll
      * parameters: none
-     * return: ArrayList<BoardGame>
+     * return: ArrayList<main.java.com.ludavault.LudaVault.BoardGame>
      * purpose: Retrieves all board games in the data store.
      */
     public ArrayList<BoardGame> getAll();

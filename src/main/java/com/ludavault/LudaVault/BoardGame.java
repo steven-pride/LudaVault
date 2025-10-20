@@ -1,9 +1,11 @@
+package com.ludavault.LudaVault;
+
 /**
  * Steven Pride
  * CEN 3024 - Software Development I
  * 10/12/2025
- * BoardGame
- * Defines the BoardGame object that stores information about a game.
+ * main.java.com.ludavault.LudaVault.BoardGame
+ * Defines the main.java.com.ludavault.LudaVault.BoardGame object that stores information about a game.
  */
 public class BoardGame {
     /**
@@ -23,15 +25,15 @@ public class BoardGame {
     private boolean isExpansion;
 
     /**
-     * constructor: BoardGame
+     * constructor: main.java.com.ludavault.LudaVault.BoardGame
      * parameters: int gameId - the unique identifier for the game.
      *             String title - the title of the game.
      *             int maxPlayers - the maximum number of players for the game.
      *             int playTime - the estimated playtime for the game.
      *             double weight - the weight of the game.
      *             boolean isExpansion - whether the game is an expansion.
-     * return: BoardGame
-     * purpose: Initializes a new BoardGame object with the provided attributes.
+     * return: main.java.com.ludavault.LudaVault.BoardGame
+     * purpose: Initializes a new main.java.com.ludavault.LudaVault.BoardGame object with the provided attributes.
      */
     public BoardGame(int gameId, String title, int maxPlayers, int playTime, double weight, boolean isExpansion)
     {
@@ -41,6 +43,16 @@ public class BoardGame {
         this.playTime = playTime;
         this.weight = weight;
         this.isExpansion = isExpansion;
+    }
+
+    public BoardGame()
+    {
+        this.gameId = 0;
+        this.title = "";
+        this.maxPlayers = 0;
+        this.playTime = 0;
+        this.weight = 0;
+        this.isExpansion = false;
     }
 
     //Getters
