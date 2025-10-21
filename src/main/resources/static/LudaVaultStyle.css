@@ -1,3 +1,169 @@
-.menu-bar li {
-   float: left;
+body {
+    font-family: Arial, Verdana, Tahoma, sans-serif;
+}
+header {
+    text-align: center;
+}
+
+main {
+    max-width: 1100px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    border-radius: 5px;
+    background-color: #4169E1FF;
+    color: white;
+    padding: 5px;
+    font-weight: bold;
+    border: 0px;
+    width: 105px;
+}
+
+section {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+}
+
+.upper-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr ;
+    margin-bottom: 10px;
+}
+
+#sql-connection {
+    display: none;
+    grid-auto-flow: column;
+    justify-items: end;
+}
+
+#sql-connection-label {
+    font-size: 13.333px;
+}
+
+#message-center {
+    display: grid;
+    grid-template-columns: 95% 5%;
+}
+
+#close-message-center {
+    display: grid;
+    justify-items: end;
+    vertical-align: top;
+}
+
+#close-message-center-icon{
+    position: relative;
+    top: -15px;
+    right: -15px;
+}
+
+.success-message {
+    color: green;
+    font-weight: bold;
+}
+
+.error-message {
+    color: red;
+}
+
+.main-layout {
+    display: grid;
+    grid-template-columns: 75% 24%;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+
+
+.game-form-menu {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+#remove-game {
+    display: grid;
+    grid-auto-flow: column;
+    justify-items: end;
+}
+
+#game-form {
+    display: grid;
+}
+
+#game-form .game-form-row {
+    margin: 5px;
+}
+
+.game-form-row label {
+    font-weight: bold;
+}
+
+#table-resistance-score {
+    margin: 10px 5px 5px 5px;
+}
+
+#trs-label {
+    font-weight: bold;
+}
+
+.calculate-trs {
+    display: grid;
+    padding: 5px;
+    grid-template-columns: 25% 75%;
+}
+
+#calculateTrs {
+    display: grid;
+    grid-auto-flow: column;
+    justify-items: end;
+}
+
+.table-container {
+    height: 500px;
+    overflow: auto;
+}
+
+#game-list {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#game-list td {
+    padding: 3px;
+    text-align: center;
+    border: 1px solid #bababa;
+}
+
+#game-list th:nth-child(1) {
+    z-index: 6;
+}
+
+#game-list th {
+    position: sticky;
+    top: 0;
+    font-weight: bold;
+    z-index: 2;
+    color: white;
+    background-color: #4169E1FF;
+    padding: 8px;
+    text-align: center;
+    border: 1px solid #bababa;
+}
+
+#game-list .game-row:nth-child(even) {
+    background-color: #b1b1b1;
+}
+
+#game-list .game-row:hover {
+    background-color: #5f7cc5;
+    cursor: pointer;
+}
+
+.game-row-id {
+    font-weight: bold;
 }

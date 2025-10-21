@@ -17,12 +17,12 @@ public class BoardGame {
      *     weight: double - the weight of the game.
      *     isExpansion: boolean - whether the game is an expansion.
      */
-    private int gameId;
+    private Integer gameId;
     private String title;
-    private int maxPlayers;
-    private int playTime;
-    private double weight;
-    private boolean isExpansion;
+    private Integer maxPlayers;
+    private Integer playTime;
+    private Double weight;
+    private Boolean isExpansion;
 
     /**
      * constructor: main.java.com.ludavault.LudaVault.BoardGame
@@ -47,51 +47,51 @@ public class BoardGame {
 
     public BoardGame()
     {
-        this.gameId = 0;
-        this.title = "";
-        this.maxPlayers = 0;
-        this.playTime = 0;
-        this.weight = 0;
-        this.isExpansion = false;
+        this.gameId = null;
+        this.title = null;
+        this.maxPlayers = null;
+        this.playTime = null;
+        this.weight = null;
+        this.isExpansion = null;
     }
 
     //Getters
-    public int getGameId() {
+    public Integer getGameId() {
         return gameId;
     }
     public String getTitle() {
         return title;
     }
-    public int getMaxPlayers() {
+    public Integer getMaxPlayers() {
         return maxPlayers;
     }
-    public int getPlayTime() {
+    public Integer getPlayTime() {
         return playTime;
     }
-    public double getWeight() {
+    public Double getWeight() {
         return weight;
     }
-    public boolean getIsExpansion() {
+    public Boolean getIsExpansion() {
         return isExpansion;
     }
 
     //Setters
-    public void setGameId(int gameId) {
+    public void setGameId(Integer gameId) {
         this.gameId = gameId;
     }
     public void setTitle(String title) {
         this.title = title;
     }
-    public void setMaxPlayers(int maxPlayers) {
+    public void setMaxPlayers(Integer maxPlayers) {
         this.maxPlayers = maxPlayers;
     }
-    public void setPlayTime(int playTime) {
+    public void setPlayTime(Integer playTime) {
         this.playTime = playTime;
     }
-    public void setWeight(double weight) {
+    public void setWeight(Double weight) {
         this.weight = weight;
     }
-    public void setIsExpansion(boolean isExpansion) {
+    public void setIsExpansion(Boolean isExpansion) {
         this.isExpansion = isExpansion;
     }
 

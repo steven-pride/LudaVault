@@ -259,4 +259,15 @@ public class GameManager {
     {
         return gameDataStore.isEmpty();
     }
+
+    public int getMaxId() {
+        if (validateCollectionIsEmpty()) {
+            return 0;
+        }
+        else
+        {
+            BoardGame[] gamesArray = gameDataStore.getAll().toArray(new BoardGame[0]);
+            return gamesArray[gamesArray.length - 1].getGameId();
+        }
+    }
 }

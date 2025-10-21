@@ -4,66 +4,121 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="/LudaVaultStyle.css">
+    <script>
+        function rowClicked(value) {
+            window.location.href = '/retrieveGame?gameId=' + value;
+        }
+        function closeMessageCenter() {
+            document.getElementById('message-center').style.display = 'none';
+        }
+    </script>
 </head>
 <body>
 <header>
-    <h1>Luda Vault</h1>
+    <h1>LudaVault -  Board Game Manager</h1>
 </header>
 <main>
-    <div class="menu-bar">
-        <nav>
-            <ul>
-                <li><a href="#"><button>Create New</button></a></li>
-                <li><a href="#"><button>Bulk Import</button></a></li>
-                <li><a href="#"><button>Remove Game</button></a></li>
-            </ul>
-        </nav>
-    </div>
-    <div class="list">
-        <table id="game-list">
-            <tr th:each="game : ${games}">
-                <td th:text="${game.gameId}"></td>
-                <td th:text="${game.title}"></td>
-                <td th:text="${game.maxPlayers}"></td>
-                <td th:text="${game.playTime}"></td>
-                <td th:text="${game.weight}"></td>
-                <td th:text="${game.isExpansion}"></td>
-            </tr>
-            <tr th:if="${#lists.isEmpty(games)}">
-                <td colspan="5">No games found</td>
-            </tr>
-        </table>
-    </div>
-    <div class="game-form">
-        <form id="game-form" method="post" action="/createGame" th:object="${newGame}">
-            <div class="row">
-            <label for="gameId">Id:</label>
-            <input type="number" min="1" step="1" th:field="*{gameId}" id="gameId" name="gameId" required />
+    <section id="upper-section" class="upper-section">
+        <div id="bulk-import" class="menu-button">
+            <form id="bulk-import-form" method="post" action="/bulkImport" enctype="multipart/form-data">
+                <input type="file" name="file" accept=".txt" />
+                <button type="submit">Bulk Import</button>
+            </form>
+        </div>
+        <!--Adding sql connection fields for Phase 4, marking as display: none on the style sheet for now-->
+        <div id="sql-connection" class="menu-button">
+            <form id="set-sql-connection" method="post" action="/setSqlConnection">
+                <label id="sql-connection-label" for="sql-db-path">SQL DB Path:</label>
+                <input type="text" id="sql-db-path" name="sql-db-path" />
+                <button type="submit">Connect</button>
+            </form>
+        </div>
+    </section>
+    <section id="message-center" class="message-center" th:if="${messages != null && !messages.isEmpty()}" th:style="${messages != null && !messages.isEmpty()} ? 'display: grid;' : 'display: none;'">
+        <div id="messages">
+            <div class="message-container" th:each="message : ${messages}">
+                <span th:class="${message.key == 'success'} ? 'success-message' : (${message.key == 'error'} ? 'error-message' : 'message')" th:text="${message.value}"></span>
             </div>
-            <div class="row">
-            <label for="title">Title:</label>
-            <input type="text" id="title" name="title" th:field="*{title}" required />
+        </div>
+        <div id="close-message-center">
+            <!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+            <svg id="close-message-center-icon" th:onclick="'javascript:closeMessageCenter()'" width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12Z" stroke="#000000" stroke-width="2"/>
+                <path d="M9 9L15 15M15 9L9 15" stroke="#000000" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+        </div>
+    </section>
+    <div class="main-layout">
+        <section class="list">
+            <div class="table-container">
+                <table id="game-list">
+                    <thead>
+                        <tr class="game-list-header">
+                            <th>Id</th>
+                            <th>Title</th>
+                            <th>Max Players</th>
+                            <th>Play Time</th>
+                            <th>Weight (Complexity)</th>
+                            <th>Is Expansion</th>
+                        </tr>
+                    </thead>
+                    <!--Found the rowClicked functionality here: https://stackoverflow.com/questions/27484706/thymeleaf-clickable-row-->
+                    <tr class="game-row" th:each="game : ${games}" th:onclick="'javascript:rowClicked(\'' + ${game.gameId} + '\');'">
+                        <td class="game-row-id" th:text="${game.gameId}"></td>
+                        <td class="game-row-title" th:text="${game.title}"></td>
+                        <td class="game-row-maxPlayers" th:text="${game.maxPlayers}"></td>
+                        <td class="game-row-playTime" th:text="${game.playTime}+' Minutes'"></td>
+                        <td class="game-row-weight" th:text="${game.weight}"></td>
+                        <td class="game-row-isExpansion" th:text="${game.isExpansion} ? 'Yes' : 'No'"></td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(games)}">
+                        <td colspan="6">No games found</td>
+                    </tr>
+                </table>
             </div>
-            <div class="row">
-            <label for="maxPlayers">Max Players:</label>
-            <input type="number" min="1" step="1" th:field="*{maxPlayers}" id="maxPlayers" name="maxPlayers" required />
+        </section>
+        <section class="game-form">
+            <div class="game-form-menu">
+                <div id="add-game" class="menu-button"><a href="/newGame"><button>New Game</button></a></div>
+                <div id="remove-game" class="menu-button"><a th:href="'/deleteGame?gameId='+${boardGame.getGameId()}"><button>Remove Game</button></a></div>
             </div>
-            <div class="row">
-            <label for="playTime">Play Time:</label>
-            <input type="number" min="1" step="1" th:field="*{playTime}" id="playTime" name="playTime" required />
+            <form id="game-form" method="post" th:action="${boardGame.getGameId() == null} ? '/createGame' : '/updateGame'" th:object="${boardGame}">
+                <div class="game-form-row">
+                <label for="gameId">Id</label><br>
+                <input type="number" th:min="1" step="1" th:field="*{gameId}" th:value="${maxId + 1}" id="gameId" name="gameId" required />
+                </div>
+                <div class="game-form-row">
+                <label for="title">Title</label><br>
+                <input type="text" id="title" name="title" th:field="*{title}" required />
+                </div>
+                <div class="game-form-row">
+                <label for="maxPlayers">Max Players</label><br>
+                <input type="number" min="1" step="1" th:field="*{maxPlayers}" id="maxPlayers" name="maxPlayers" required />
+                </div>
+                <div class="game-form-row">
+                <label for="playTime">Play Time</label><br>
+                <input type="number" min="1" step="1" th:field="*{playTime}" id="playTime" name="playTime" required />
+                </div>
+                <div class="game-form-row">
+                <label for="weight">Weight (Complexity)</label><br>
+                <input type="number" min="1" step="0.1" th:field="*{weight}" id="weight" name="weight" required />
+                </div>
+                <div class="game-form-row">
+                <label for="isExpansion">Expansion</label>
+                <input type="checkbox" th:field="*{isExpansion}" id="isExpansion" name="isExpansion" />
+                </div>
+                <div class="game-form-row">
+                    <button type="submit" th:text="${boardGame.getMaxPlayers() == null} ? 'Create Game' : 'Update Game'"></button>
+                </div>
+            </form>
+            <div id="table-resistance-score" >
+                <span id="trs-label">Table Resistance Score</span>
+                <div class="calculate-trs">
+                    <label th:text="${trsValue == 0} ? '--' : ${#numbers.formatDecimal(trsValue, 0, 1)}"></label>
+                    <div id="calculateTrs" class="menu-button"><a th:href="'/calculateTRS?gameId='+${boardGame.getGameId()}"><button>Calculate TRS</button></a></div>
+                </div>
             </div>
-            <div class="row">
-            <label for="weight">Weight (Complexity):</label>
-            <input type="number" min="1" step="0.1" th:field="*{weight}" id="weight" name="weight" required />
-            </div>
-            <div class="row">
-            <label for="isExpansion">Is Expansion:</label>
-            <input type="checkbox" th:field="*{isExpansion}" id="isExpansion" name="isExpansion" />
-            </div>
-            <div class="row">
-            <button type="submit">Create</button>
-            </div>
-        </form>
+        </section>
     </div>
 </main>
 </body>
