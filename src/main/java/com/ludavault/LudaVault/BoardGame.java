@@ -1,7 +1,11 @@
+package com.ludavault.LudaVault;
+
+import jakarta.validation.constraints.*;
+
 /**
  * Steven Pride
  * CEN 3024 - Software Development I
- * 10/12/2025
+ * 10/22/2025
  * BoardGame
  * Defines the BoardGame object that stores information about a game.
  */
@@ -15,12 +19,28 @@ public class BoardGame {
      *     weight: double - the weight of the game.
      *     isExpansion: boolean - whether the game is an expansion.
      */
-    private int gameId;
+    @NotNull(message = "Game ID must be provided.")
+    @Min(value = 1, message = "Game ID must be greater than or equal to 1.")
+    private Integer gameId;
+
+    @NotEmpty(message = "Title cannot be empty.")
     private String title;
-    private int maxPlayers;
-    private int playTime;
-    private double weight;
-    private boolean isExpansion;
+
+    @NotNull(message = "Maximum players must be provided.")
+    @Min(value = 1, message = "Maximum players must be greater than or equal to 1.")
+    private Integer maxPlayers;
+
+    @NotNull(message = "Play time must be provided.")
+    @Min(value = 1, message = "Play time must be greater than or equal to 1.")
+    private Integer playTime;
+
+    @NotNull(message = "Weight must be provided.")
+    @Min(value = 1, message = "Weight must be between 1 and 5.")
+    @Max(value = 5, message = "Weight must be between 1 and 5.")
+    private Double weight;
+
+    @NotNull(message = "Expansion status must be provided.")
+    private Boolean isExpansion;
 
     /**
      * constructor: BoardGame
@@ -43,43 +63,59 @@ public class BoardGame {
         this.isExpansion = isExpansion;
     }
 
+    /**
+     * constructor: BoardGame
+     * parameters: none
+     * return: BoardGame
+     * purpose: Initializes a new BoardGame object with all attributes set to null.
+     */
+    public BoardGame()
+    {
+        this.gameId = null;
+        this.title = null;
+        this.maxPlayers = null;
+        this.playTime = null;
+        this.weight = null;
+        this.isExpansion = null;
+    }
+
     //Getters
-    public int getGameId() {
+    public Integer getGameId() {
         return gameId;
     }
     public String getTitle() {
         return title;
     }
-    public int getMaxPlayers() {
+    public Integer getMaxPlayers() {
         return maxPlayers;
     }
-    public int getPlayTime() {
+    public Integer getPlayTime() {
         return playTime;
     }
-    public double getWeight() {
+    public Double getWeight() {
         return weight;
     }
-    public boolean getIsExpansion() {
+    public Boolean getIsExpansion() {
         return isExpansion;
     }
 
     //Setters
-    public void setGameId(int gameId) {
+    public void setGameId(Integer gameId) {
         this.gameId = gameId;
     }
     public void setTitle(String title) {
         this.title = title;
     }
-    public void setMaxPlayers(int maxPlayers) {
+    public void setMaxPlayers(Integer maxPlayers) {
         this.maxPlayers = maxPlayers;
     }
-    public void setPlayTime(int playTime) {
+    public void setPlayTime(Integer playTime) {
         this.playTime = playTime;
     }
-    public void setWeight(double weight) {
+    public void setWeight(Double weight) {
         this.weight = weight;
     }
-    public void setIsExpansion(boolean isExpansion) {
+    public void setIsExpansion(Boolean isExpansion) {
         this.isExpansion = isExpansion;
     }
 

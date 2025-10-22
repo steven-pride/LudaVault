@@ -1,12 +1,14 @@
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+package com.ludavault.LudaVaultTests;
 
 import static org.junit.jupiter.api.Assertions.*;
+import com.ludavault.LudaVault.BoardGame;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Steven Pride
  * CEN 3024 - Software Development I
- * 10/19/2025
+ * 10/22/2025
  * BoardGameTest
  * Defines the BoardGameTest class for testing the BoardGame object.
  */

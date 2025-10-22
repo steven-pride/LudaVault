@@ -1,3 +1,5 @@
+package com.ludavault.LudaVault;
+
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -8,7 +10,7 @@ import java.util.HashMap;
 /**
  * Steven Pride
  * CEN 3024 - Software Development I
- * 10/12/2025
+ * 10/22/2025
  * GameManager
  * Provides the core business logic for LudaVault (Business Logic Layer).
  * Provides methods for importing board game data from a file, creating new board games,
@@ -64,22 +66,26 @@ public class GameManager {
                         throw new IllegalArgumentException("Data was not in the correct format. Expected 6 comma separated values.");
                     }
                     if (!validateGreaterThanZero(Integer.parseInt(gameData[0]))) {
-                        throw new IllegalArgumentException("Game ID must be greater than 0");
+                        throw new IllegalArgumentException("Game ID must be greater than 0.");
+                    }
+                    if(gameDataStore.contains(Integer.parseInt(gameData[0])))
+                    {
+                        throw new IllegalArgumentException("Game ID: " + Integer.parseInt(gameData[0]) + " already exists.");
                     }
                     if (String.valueOf(gameData[1]).isBlank()) {
-                        throw new IllegalArgumentException("Title cannot be empty or blank");
+                        throw new IllegalArgumentException("Title cannot be empty or blank.");
                     }
                     if (!validateGreaterThanZero(Integer.parseInt(gameData[2]))) {
-                        throw new IllegalArgumentException("Maximum number of players must be greater than 0");
+                        throw new IllegalArgumentException("Maximum number of players must be greater than 0.");
                     }
                     if (!validateGreaterThanZero(Integer.parseInt(gameData[3]))) {
-                        throw new IllegalArgumentException("Play time must be greater than 0");
+                        throw new IllegalArgumentException("Play time must be greater than 0.");
                     }
                     if (!validateRange(1, 5, Double.parseDouble(gameData[4]))) {
-                        throw new IllegalArgumentException("Weight must be between 1 and 5");
+                        throw new IllegalArgumentException("Weight must be between 1 and 5.");
                     }
                     if (!(gameData[5]).equalsIgnoreCase("true") && !(gameData[5]).equalsIgnoreCase("false")) {
-                        throw new IllegalArgumentException("Expansion must be true or false");
+                        throw new IllegalArgumentException("Expansion must be true or false.");
                     }
 
                     //create a new BoardGame object
@@ -256,5 +262,22 @@ public class GameManager {
     public boolean validateCollectionIsEmpty()
     {
         return gameDataStore.isEmpty();
+    }
+
+    /**
+     * method: getMaxId
+     * return: int
+     * purpose: Retrieves the maximum game ID from the gameDataStore collection.
+     *          Returns 0 if the collection is empty, or the maximum game ID otherwise.
+     */
+    public int getMaxId() {
+        if (validateCollectionIsEmpty()) {
+            return 0;
+        }
+        else
+        {
+            BoardGame[] gamesArray = gameDataStore.getAll().toArray(new BoardGame[0]);
+            return gamesArray[gamesArray.length - 1].getGameId();
+        }
     }
 }

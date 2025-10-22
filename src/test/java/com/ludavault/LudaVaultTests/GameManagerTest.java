@@ -1,8 +1,12 @@
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+package com.ludavault.LudaVaultTests;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import com.ludavault.LudaVault.BoardGame;
+import com.ludavault.LudaVault.GameManager;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
@@ -208,19 +212,6 @@ class GameManagerTest {
     void deleteGameHasErrors() {
         boolean isDeleted = gameManager.deleteGame(10);
         assertFalse(isDeleted);
-        assertNull(gameManager.retrieveGame(10));
-    }
-
-    /**
-     * method: deleteGameTestFails
-     * parameters: none
-     * return: void
-     * purpose: Tests the deleteGame method of the GameManager object, intentionally errors.
-     */
-    @Test
-    void deleteGameTestFails() {
-        boolean isDeleted = gameManager.deleteGame(10);
-        assertTrue(isDeleted);
         assertNull(gameManager.retrieveGame(10));
     }
 

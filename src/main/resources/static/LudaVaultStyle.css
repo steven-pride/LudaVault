@@ -1,0 +1,216 @@
+body {
+    font-family: Arial, Verdana, Tahoma, sans-serif;
+}
+header {
+    text-align: center;
+}
+
+main {
+    max-width: 1100px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #E5E7EB;
+    border-radius: 5px;
+    background-color: #F8FAFC;
+}
+
+button {
+    border-radius: 5px;
+    background-color: #3F54A2;
+    color: white;
+    padding: 5px;
+    font-weight: bold;
+    border: 0px;
+    width: 105px;
+}
+
+button:hover {
+    background-color: #2E3F6E;
+    cursor: pointer;
+}
+
+/*Experimenting with hiding the button instead of graying out*/
+button:disabled {
+    display:none;
+    background-color: #cccccc !important;
+    color: #666666 !important;
+}
+
+section {
+    border: 1px solid #E5E7EB;
+    border-radius: 5px;
+    padding: 20px;
+    background-color: #FFFFFF;
+}
+
+.upper-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr ;
+    margin-bottom: 10px;
+}
+
+#bulk-import-file-input::file-selector-button {
+    border-radius: 5px;
+    background-color: #3F54A2;
+    color: white;
+    padding: 5px;
+    font-weight: bold;
+    border: 0px;
+    width: 105px;
+}
+
+#bulk-import-file-input::file-selector-button:hover {
+    background-color: #2E3F6E;
+    cursor: pointer;
+}
+
+#message-center {
+    display: grid;
+    grid-template-columns: 95% 5%;
+}
+
+#close-message-center {
+    display: grid;
+    justify-items: end;
+    vertical-align: top;
+}
+
+#close-message-center-icon{
+    position: relative;
+    top: -15px;
+    right: -15px;
+}
+
+.success-message {
+    color: #16A34A;
+    font-weight: bold;
+}
+
+.error-message {
+    color: #DC2626;
+}
+
+.main-layout {
+    display: grid;
+    grid-template-columns: 75% 24%;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.game-form-menu {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+#remove-game {
+    display: grid;
+    grid-auto-flow: column;
+    justify-items: end;
+}
+
+#remove-game button {
+    background-color: #DC2626;
+}
+
+#remove-game button:hover {
+    filter: brightness(.9);
+}
+
+#game-form {
+    display: grid;
+}
+
+#game-form .game-form-row {
+    margin: 5px;
+}
+
+.game-form-row label {
+    font-weight: bold;
+}
+
+#table-resistance-score {
+    margin: 10px 5px 5px 5px;
+}
+
+#trs-label {
+    font-weight: bold;
+}
+
+.calculate-trs {
+    display: grid;
+    padding: 5px;
+    grid-template-columns: 25% 75%;
+}
+
+#calculateTrs {
+    display: grid;
+    grid-auto-flow: column;
+    justify-items: end;
+}
+
+.table-container {
+    height: 500px;
+    overflow: auto;
+}
+
+#game-list {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#game-list td {
+    padding: 3px;
+    text-align: center;
+    border: 1px solid #E5E7EB;
+}
+
+#game-list th:nth-child(1) {
+    z-index: 6;
+}
+
+/*Setting the header to stick at the top*/
+#game-list th {
+    position: sticky;
+    top: 0;
+    font-weight: bold;
+    z-index: 2;
+    color: #0F172A;
+    background-color: #F1F5F9;
+    padding: 8px;
+    text-align: center;
+    border: 1px solid #E5E7EB;
+}
+
+#game-list .game-row:nth-child(even) {
+    background-color: #F1F5F9;
+}
+
+#game-list .game-row:hover {
+    background-color: #EEF2FF;
+    cursor: pointer;
+}
+
+.game-row.selected {
+    background-color: #3F54A2 !important;
+    color: white !important;
+}
+
+.game-row-id {
+    font-weight: bold;
+}
+
+.field-error {
+    border: 2px solid red;
+}
+
+/*Preparing for Phase 4*/
+#sql-connection {
+    display: none;
+    /*display: grid;*/
+    grid-auto-flow: column;
+    justify-items: end;
+}
+
+#sql-connection-label {
+    font-size: 13.333px;
+}

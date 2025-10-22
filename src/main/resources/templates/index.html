@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/LudaVaultStyle.css">
+    <script>
+        function rowClicked(value) {
+            window.location.href = '/retrieveGame?gameId=' + value;
+        }
+        function closeMessageCenter() {
+            document.getElementById('message-center').style.display = 'none';
+        }
+    </script>
+</head>
+<body>
+<header>
+    <img src="/LudaVault_Logo.svg" alt="LudaVault - Board Game Manager" width="500px">
+</header>
+<main>
+    <section id="upper-section" class="upper-section">
+        <!--Holds the bulk import and sql connection fields and buttons-->
+        <div id="bulk-import" class="menu-button">
+            <form id="bulk-import-form" method="post" action="/bulkImport" enctype="multipart/form-data">
+                <input id="bulk-import-file-input" type="file" name="file" accept=".txt" />
+                <button type="submit">Bulk Import</button>
+            </form>
+        </div>
+        <!--Adding sql connection fields for Phase 4, marking as display: none on the style sheet for now-->
+        <div id="sql-connection" class="menu-button">
+            <form id="set-sql-connection" method="post" action="/setSqlConnection">
+                <label id="sql-connection-label" for="sql-db-path">SQL DB Path:</label>
+                <input type="text" id="sql-db-path" name="sql-db-path" />
+                <button type="submit">Connect</button>
+            </form>
+        </div>
+    </section>
+    <section id="message-center" class="message-center" th:if="${messages != null && !messages.isEmpty()}" th:style="${messages != null && !messages.isEmpty()} ? 'display: grid;' : 'display: none;'">
+        <!--Displays messages from the controller, uses thymeleaf to iterate over display the messages-->
+        <div id="messages">
+            <div class="message-container" th:each="message : ${messages}">
+                <span th:class="${message.type == 'success'} ? 'success-message' : (${message.type == 'error'} ? 'error-message' : 'message')" th:text="${message.message}"></span>
+            </div>
+        </div>
+        <div id="close-message-center">
+            <!--Close button for the message center-->
+            <!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+            <svg id="close-message-center-icon" th:onclick="'javascript:closeMessageCenter()'" width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12Z" stroke="#000000" stroke-width="2"/>
+                <path d="M9 9L15 15M15 9L9 15" stroke="#000000" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+        </div>
+    </section>
+    <div class="main-layout">
+        <section class="list">
+            <!--Displays the list of games-->
+            <div class="table-container">
+                <table id="game-list">
+                    <thead>
+                        <tr class="game-list-header">
+                            <th>Id</th>
+                            <th>Title</th>
+                            <th>Max Players</th>
+                            <th>Play Time</th>
+                            <th>Weight (Complexity)</th>
+                            <th>Is Expansion</th>
+                        </tr>
+                    </thead>
+                    <!--Iterates over the game list and creates a new row in the table for each, dynamically adding the class selected to the row if the gameId matches the current gameId-->
+                    <!--Found the rowClicked functionality here: https://stackoverflow.com/questions/27484706/thymeleaf-clickable-row-->
+                    <tr th:class="${boardGame.getMaxPlayers() != null && game.gameId == boardGame.gameId} ? 'game-row selected' : 'game-row'" th:each="game : ${games}" th:onclick="'javascript:rowClicked(\'' + ${game.gameId} + '\');'">
+                        <td class="game-row-id" th:text="${game.gameId}"></td>
+                        <td class="game-row-title" th:text="${game.title}"></td>
+                        <td class="game-row-maxPlayers" th:text="${game.maxPlayers}"></td>
+                        <td class="game-row-playTime" th:text="${game.playTime}+' Minutes'"></td>
+                        <td class="game-row-weight" th:text="${game.weight}"></td>
+                        <td class="game-row-isExpansion" th:text="${game.isExpansion} ? 'Yes' : 'No'"></td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(games)}">
+                        <td colspan="6">No games found</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+        <section class="game-form">
+            <!--The form for creating and editing games, displays the buttons for adding, removing games, and calculating the TRS-->
+            <div class="game-form-menu">
+                <!--Displays the buttons for creating a new game (clearing form) and removing games-->
+                <div id="add-game" class="menu-button"><a href="/newGame"><button>New Game</button></a></div>
+                <div id="remove-game" class="menu-button"><a th:href="'/deleteGame?gameId='+${boardGame.getGameId()}"><button th:disabled="${boardGame.getMaxPlayers() == null}">Remove Game</button></a></div>
+            </div>
+            <form id="game-form" method="post" th:action="${boardGame.getMaxPlayers() == null} ? '/createGame' : '/updateGame'" th:object="${boardGame}">
+                <!--Main form for creating and editing games, displays the fields for the gameId, title, maxPlayers, playTime, weight, and isExpansion-->
+                <div class="game-form-row">
+                <label for="gameId">Id</label><br>
+                <input type="number" th:min="1" step="1" th:field="*{gameId}" th:value="${maxId + 1}" id="gameId" name="gameId" required />
+                </div>
+                <div class="game-form-row">
+                <label for="title">Title</label><br>
+                <input type="text" id="title" name="title" th:field="*{title}" required />
+                </div>
+                <div class="game-form-row">
+                <label for="maxPlayers">Max Players</label><br>
+                <input type="number" min="1" step="1" th:field="*{maxPlayers}" id="maxPlayers" name="maxPlayers" required />
+                </div>
+                <div class="game-form-row">
+                <label for="playTime">Play Time (Minutes)</label><br>
+                <input type="number" min="1" step="1" th:field="*{playTime}" id="playTime" name="playTime" required />
+                </div>
+                <div class="game-form-row">
+                <label for="weight">Weight (Complexity)</label><br>
+                <input type="number" min="1" step="0.1" th:field="*{weight}" id="weight" name="weight" required />
+                </div>
+                <div class="game-form-row">
+                <label for="isExpansion">Expansion</label>
+                <input type="checkbox" id="isExpansion" name="isExpansion" th:field="*{isExpansion}" />
+                </div>
+                <div class="game-form-row">
+                    <!--Dynamically changes the button for creating or updating the game-->
+                    <button type="submit" th:text="${boardGame.getMaxPlayers() == null} ? 'Create Game' : 'Update Game'"></button>
+                </div>
+            </form>
+            <div id="table-resistance-score" >
+                <!--Displays the TRS value and button for calculating the TRS for the selected game-->
+                <span id="trs-label">Table Resistance Score</span>
+                <div class="calculate-trs">
+                    <label th:text="${trsValue == 0} ? '--' : ${#numbers.formatDecimal(trsValue, 0, 1)}"></label>
+                    <div id="calculateTrs" class="menu-button"><a th:href="'/calculateTRS?gameId='+${boardGame.getGameId()}"><button th:disabled="${boardGame.getMaxPlayers() == null}">Calculate TRS</button></a></div>
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
+</body>
+</html>
