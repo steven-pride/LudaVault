@@ -16,7 +16,6 @@ main {
 
 button {
     border-radius: 5px;
-    /*background-color: #2460ce;*/
     background-color: #3F54A2;
     color: white;
     padding: 5px;
@@ -28,6 +27,13 @@ button {
 button:hover {
     background-color: #2E3F6E;
     cursor: pointer;
+}
+
+/*Experimenting with hiding the button instead of graying out*/
+button:disabled {
+    display:none;
+    background-color: #cccccc !important;
+    color: #666666 !important;
 }
 
 section {
@@ -162,6 +168,7 @@ section {
     z-index: 6;
 }
 
+/*Setting the header to stick at the top*/
 #game-list th {
     position: sticky;
     top: 0;
@@ -180,7 +187,6 @@ section {
 
 #game-list .game-row:hover {
     background-color: #EEF2FF;
-    /*color: white;*/
     cursor: pointer;
 }
 

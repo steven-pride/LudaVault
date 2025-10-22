@@ -5,9 +5,9 @@ import jakarta.validation.constraints.*;
 /**
  * Steven Pride
  * CEN 3024 - Software Development I
- * 10/12/2025
- * main.java.com.ludavault.LudaVault.BoardGame
- * Defines the main.java.com.ludavault.LudaVault.BoardGame object that stores information about a game.
+ * 10/22/2025
+ * BoardGame
+ * Defines the BoardGame object that stores information about a game.
  */
 public class BoardGame {
     /**
@@ -43,15 +43,15 @@ public class BoardGame {
     private Boolean isExpansion;
 
     /**
-     * constructor: main.java.com.ludavault.LudaVault.BoardGame
+     * constructor: BoardGame
      * parameters: int gameId - the unique identifier for the game.
      *             String title - the title of the game.
      *             int maxPlayers - the maximum number of players for the game.
      *             int playTime - the estimated playtime for the game.
      *             double weight - the weight of the game.
      *             boolean isExpansion - whether the game is an expansion.
-     * return: main.java.com.ludavault.LudaVault.BoardGame
-     * purpose: Initializes a new main.java.com.ludavault.LudaVault.BoardGame object with the provided attributes.
+     * return: BoardGame
+     * purpose: Initializes a new BoardGame object with the provided attributes.
      */
     public BoardGame(int gameId, String title, int maxPlayers, int playTime, double weight, boolean isExpansion)
     {
@@ -63,6 +63,12 @@ public class BoardGame {
         this.isExpansion = isExpansion;
     }
 
+    /**
+     * constructor: BoardGame
+     * parameters: none
+     * return: BoardGame
+     * purpose: Initializes a new BoardGame object with all attributes set to null.
+     */
     public BoardGame()
     {
         this.gameId = null;

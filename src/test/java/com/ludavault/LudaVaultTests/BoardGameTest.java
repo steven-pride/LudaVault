@@ -8,9 +8,9 @@ import org.junit.jupiter.api.Test;
 /**
  * Steven Pride
  * CEN 3024 - Software Development I
- * 10/19/2025
- * LudaVault.BoardGameTest
- * Defines the LudaVault.BoardGameTest class for testing the com.ludavault.LudaVault.BoardGame object.
+ * 10/22/2025
+ * BoardGameTest
+ * Defines the BoardGameTest class for testing the BoardGame object.
  */
 class BoardGameTest {
     BoardGame boardGame;
@@ -19,7 +19,7 @@ class BoardGameTest {
      * method: setUp
      * parameters: none
      * return: void
-     * purpose: Initializes the com.ludavault.LudaVault.BoardGame object for testing
+     * purpose: Initializes the BoardGame object for testing
      */
     @BeforeEach
     void setUp() {
@@ -30,7 +30,7 @@ class BoardGameTest {
      * method: calculateTRS
      * parameters: none
      * return: void
-     * purpose: Tests the calculateTRS method of the com.ludavault.LudaVault.BoardGame object
+     * purpose: Tests the calculateTRS method of the BoardGame object
      */
     @Test
     void calculateTRS() {
