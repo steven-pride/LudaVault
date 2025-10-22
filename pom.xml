@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.ludavault</groupId>
 	<artifactId>LudaVault</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>LudaVault</name>
 	<description>LudaVault Data Management System</description>
 	<url/>
@@ -71,6 +71,13 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+            <plugin>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>3.5.0</version>
+                <configuration>
+                    <force>true</force>
+                </configuration>
+            </plugin>
 		</plugins>
 	</build>
 

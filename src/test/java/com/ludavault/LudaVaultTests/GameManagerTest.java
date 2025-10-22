@@ -216,19 +216,6 @@ class GameManagerTest {
     }
 
     /**
-     * method: deleteGameTestFails
-     * parameters: none
-     * return: void
-     * purpose: Tests the deleteGame method of the GameManager object, intentionally errors.
-     */
-    @Test
-    void deleteGameTestFails() {
-        boolean isDeleted = gameManager.deleteGame(10);
-        assertTrue(isDeleted);
-        assertNull(gameManager.retrieveGame(10));
-    }
-
-    /**
      * method: listGames
      * parameters: none
      * return: void

@@ -66,22 +66,26 @@ public class GameManager {
                         throw new IllegalArgumentException("Data was not in the correct format. Expected 6 comma separated values.");
                     }
                     if (!validateGreaterThanZero(Integer.parseInt(gameData[0]))) {
-                        throw new IllegalArgumentException("Game ID must be greater than 0");
+                        throw new IllegalArgumentException("Game ID must be greater than 0.");
+                    }
+                    if(gameDataStore.contains(Integer.parseInt(gameData[0])))
+                    {
+                        throw new IllegalArgumentException("Game ID: " + Integer.parseInt(gameData[0]) + " already exists.");
                     }
                     if (String.valueOf(gameData[1]).isBlank()) {
-                        throw new IllegalArgumentException("Title cannot be empty or blank");
+                        throw new IllegalArgumentException("Title cannot be empty or blank.");
                     }
                     if (!validateGreaterThanZero(Integer.parseInt(gameData[2]))) {
-                        throw new IllegalArgumentException("Maximum number of players must be greater than 0");
+                        throw new IllegalArgumentException("Maximum number of players must be greater than 0.");
                     }
                     if (!validateGreaterThanZero(Integer.parseInt(gameData[3]))) {
-                        throw new IllegalArgumentException("Play time must be greater than 0");
+                        throw new IllegalArgumentException("Play time must be greater than 0.");
                     }
                     if (!validateRange(1, 5, Double.parseDouble(gameData[4]))) {
-                        throw new IllegalArgumentException("Weight must be between 1 and 5");
+                        throw new IllegalArgumentException("Weight must be between 1 and 5.");
                     }
                     if (!(gameData[5]).equalsIgnoreCase("true") && !(gameData[5]).equalsIgnoreCase("false")) {
-                        throw new IllegalArgumentException("Expansion must be true or false");
+                        throw new IllegalArgumentException("Expansion must be true or false.");
                     }
 
                     //create a new BoardGame object

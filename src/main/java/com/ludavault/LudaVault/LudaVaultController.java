@@ -139,7 +139,8 @@ public class LudaVaultController {
             return "redirect:/";
         }
             boolean result = gameManager.createGame(boardGame.getGameId(), boardGame.getTitle(), boardGame.getMaxPlayers(), boardGame.getPlayTime(), boardGame.getWeight(), boardGame.getIsExpansion());
-            currentBoardGame = boardGame;
+            if(result)
+                currentBoardGame = boardGame;
 
             if(!result) {
                 messages = new ArrayList<Message>();
@@ -200,6 +201,9 @@ public class LudaVaultController {
         trsValue = 0;
 
         boolean result = gameManager.updateGame(boardGame.getGameId(), boardGame.getTitle(), boardGame.getMaxPlayers(), boardGame.getPlayTime(), boardGame.getWeight(), boardGame.getIsExpansion());
+        if(result)
+            currentBoardGame = boardGame;
+
         if(!result) {
             messages = new ArrayList<Message>();
             messages.add(new Message("error", "Problem updating game with ID: " + boardGame.getGameId()));
