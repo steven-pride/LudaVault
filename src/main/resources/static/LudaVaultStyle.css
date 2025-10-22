@@ -9,13 +9,15 @@ main {
     max-width: 1100px;
     margin: 20px auto;
     padding: 20px;
-    border: 1px solid #ccc;
+    border: 1px solid #E5E7EB;
     border-radius: 5px;
+    background-color: #F8FAFC;
 }
 
 button {
     border-radius: 5px;
-    background-color: #4169E1FF;
+    /*background-color: #2460ce;*/
+    background-color: #3F54A2;
     color: white;
     padding: 5px;
     font-weight: bold;
@@ -23,10 +25,16 @@ button {
     width: 105px;
 }
 
+button:hover {
+    background-color: #2E3F6E;
+    cursor: pointer;
+}
+
 section {
-    border: 1px solid #ccc;
+    border: 1px solid #E5E7EB;
     border-radius: 5px;
     padding: 20px;
+    background-color: #FFFFFF;
 }
 
 .upper-section {
@@ -35,14 +43,19 @@ section {
     margin-bottom: 10px;
 }
 
-#sql-connection {
-    display: none;
-    grid-auto-flow: column;
-    justify-items: end;
+#bulk-import-file-input::file-selector-button {
+    border-radius: 5px;
+    background-color: #3F54A2;
+    color: white;
+    padding: 5px;
+    font-weight: bold;
+    border: 0px;
+    width: 105px;
 }
 
-#sql-connection-label {
-    font-size: 13.333px;
+#bulk-import-file-input::file-selector-button:hover {
+    background-color: #2E3F6E;
+    cursor: pointer;
 }
 
 #message-center {
@@ -63,12 +76,12 @@ section {
 }
 
 .success-message {
-    color: green;
+    color: #16A34A;
     font-weight: bold;
 }
 
 .error-message {
-    color: red;
+    color: #DC2626;
 }
 
 .main-layout {
@@ -77,8 +90,6 @@ section {
     gap: 10px;
     margin-top: 10px;
 }
-
-
 
 .game-form-menu {
     display: grid;
@@ -89,6 +100,14 @@ section {
     display: grid;
     grid-auto-flow: column;
     justify-items: end;
+}
+
+#remove-game button {
+    background-color: #DC2626;
+}
+
+#remove-game button:hover {
+    filter: brightness(.9);
 }
 
 #game-form {
@@ -136,7 +155,7 @@ section {
 #game-list td {
     padding: 3px;
     text-align: center;
-    border: 1px solid #bababa;
+    border: 1px solid #E5E7EB;
 }
 
 #game-list th:nth-child(1) {
@@ -148,22 +167,44 @@ section {
     top: 0;
     font-weight: bold;
     z-index: 2;
-    color: white;
-    background-color: #4169E1FF;
+    color: #0F172A;
+    background-color: #F1F5F9;
     padding: 8px;
     text-align: center;
-    border: 1px solid #bababa;
+    border: 1px solid #E5E7EB;
 }
 
 #game-list .game-row:nth-child(even) {
-    background-color: #b1b1b1;
+    background-color: #F1F5F9;
 }
 
 #game-list .game-row:hover {
-    background-color: #5f7cc5;
+    background-color: #EEF2FF;
+    /*color: white;*/
     cursor: pointer;
+}
+
+.game-row.selected {
+    background-color: #3F54A2 !important;
+    color: white !important;
 }
 
 .game-row-id {
     font-weight: bold;
+}
+
+.field-error {
+    border: 2px solid red;
+}
+
+/*Preparing for Phase 4*/
+#sql-connection {
+    display: none;
+    /*display: grid;*/
+    grid-auto-flow: column;
+    justify-items: end;
+}
+
+#sql-connection-label {
+    font-size: 13.333px;
 }

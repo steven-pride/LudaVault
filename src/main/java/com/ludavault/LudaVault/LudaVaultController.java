@@ -1,11 +1,13 @@
 package com.ludavault.LudaVault;
 
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 @Controller
@@ -13,7 +15,7 @@ public class LudaVaultController {
     private GameManager gameManager;
     private BoardGame currentBoardGame;
     private double trsValue = 0;
-    private HashMap<String, String> messages;
+    private ArrayList<Message> messages;
 
     public LudaVaultController() {
         gameManager = new GameManager();
@@ -53,11 +55,15 @@ public class LudaVaultController {
             if(file.isEmpty() || file.getSize() == 0 || file.getContentType() == null)
                 throw new Exception("File is empty");
             byte[] fileBytes = file.getBytes();
-            messages = gameManager.bulkImport(fileBytes);
+            HashMap<String, String> results = gameManager.bulkImport(fileBytes);
+            messages = new ArrayList<Message>();
+            for(String key : results.keySet()) {
+                messages.add(new Message(key, results.get(key)));
+            }
         }
         catch (Exception e) {
-            messages = new HashMap<String, String>();
-            messages.put("error", "Error processing file: " + e.getMessage());
+            messages = new ArrayList<Message>();
+            messages.add(new Message("error", "Error processing file: " + e.getMessage()));
             return "redirect:/";
         }
 
@@ -65,20 +71,27 @@ public class LudaVaultController {
     }
 
     @PostMapping("/createGame")
-    public String createGame(@ModelAttribute("boardGame") BoardGame boardGame,
+    public String createGame(@Valid @ModelAttribute("boardGame") BoardGame boardGame,
                              BindingResult bindingResult,
                              Model model) {
+        if(bindingResult.hasErrors()) {
+            return parseBindingResultErrors(bindingResult);
+        }
         currentBoardGame = null;
         trsValue = 0;
         messages = null;
-
-        boolean result = gameManager.createGame(boardGame.getGameId(), boardGame.getTitle(), boardGame.getMaxPlayers(), boardGame.getPlayTime(), boardGame.getWeight(), boardGame.getIsExpansion());
-        currentBoardGame = boardGame;
-        if(!result) {
-            messages = new HashMap<String, String>();
-            messages.put("error", "Problem creating game with ID: " + boardGame.getGameId());
+        if(gameManager.retrieveGame(boardGame.getGameId()) != null) {
+            messages = new ArrayList<Message>();
+            messages.add(new Message("error", "Game with ID: " + boardGame.getGameId() + " already exists"));
+            return "redirect:/";
         }
+            boolean result = gameManager.createGame(boardGame.getGameId(), boardGame.getTitle(), boardGame.getMaxPlayers(), boardGame.getPlayTime(), boardGame.getWeight(), boardGame.getIsExpansion());
+            currentBoardGame = boardGame;
 
+            if(!result) {
+                messages = new ArrayList<Message>();
+                messages.add(new Message("error", "Problem creating game with ID: " + boardGame.getGameId()));
+            }
         return "redirect:/";
     }
 
@@ -90,38 +103,54 @@ public class LudaVaultController {
 
         currentBoardGame = gameManager.retrieveGame(gameId);
         if(currentBoardGame == null) {
-            messages = new HashMap<String, String>();
-            messages.put("error", "Game with ID: " + gameId + " not found");
+            messages = new ArrayList<Message>();
+            messages.add(new Message("error", "Game with ID: " + gameId + " not found"));
         }
 
         return "redirect:/";
     }
 
     @PostMapping("/updateGame")
-    public String updateGame(@ModelAttribute("boardGame") BoardGame boardGame,
+    public String updateGame(@Valid @ModelAttribute("boardGame") BoardGame boardGame,
                              BindingResult bindingResult,
                              Model model) {
-        trsValue = 0;
+        if(bindingResult.hasErrors()) {
+            return parseBindingResultErrors(bindingResult);
+        }
+
+        if(gameManager.retrieveGame(boardGame.getGameId()) == null) {
+            messages = new ArrayList<Message>();
+            messages.add(new Message("error", "Game with ID: " + boardGame.getGameId() + " not found"));
+            return "redirect:/";
+        }
+
         messages = null;
+        trsValue = 0;
 
         boolean result = gameManager.updateGame(boardGame.getGameId(), boardGame.getTitle(), boardGame.getMaxPlayers(), boardGame.getPlayTime(), boardGame.getWeight(), boardGame.getIsExpansion());
         if(!result) {
-            messages = new HashMap<String, String>();
-            messages.put("error", "Problem updating game with ID: " + boardGame.getGameId());
+            messages = new ArrayList<Message>();
+            messages.add(new Message("error", "Problem updating game with ID: " + boardGame.getGameId()));
         }
         return "redirect:/";
     }
 
     @GetMapping("/deleteGame")
     public String deleteGame(@RequestParam int gameId, Model model) {
+        if(gameManager.retrieveGame(gameId) == null) {
+            messages = new ArrayList<Message>();
+            messages.add(new Message("error", "Game with ID: " + gameId + " not found"));
+            return "redirect:/";
+        }
+
+        messages = null;
         currentBoardGame = null;
         trsValue = 0;
-        messages = null;
 
         boolean result = gameManager.deleteGame(gameId);
         if(!result) {
-            messages = new HashMap<String, String>();
-            messages.put("error", "Problem deleting game with ID: " + gameId);
+            messages = new ArrayList<Message>();
+            messages.add(new Message("error", "Problem deleting game with ID: " + gameId));
         }
         return "redirect:/";
     }
@@ -133,14 +162,31 @@ public class LudaVaultController {
 
         BoardGame game = gameManager.retrieveGame(gameId);
         if(game == null) {
-            messages = new HashMap<String, String>();
-            messages.put("error", "Game with ID: " + gameId + " not found");
+            messages = new ArrayList<Message>();
+            messages.add(new Message("error", "Game with ID: " + gameId + " not found"));
         }
         trsValue = gameManager.calculateTRS(game);
         if(trsValue <= 0) {
-            messages = new HashMap<String, String>();
-            messages.put("error", "Problem calculating TRS for game with ID: " + gameId);
+            messages = new ArrayList<Message>();
+            messages.add(new Message("error", "Problem calculating TRS for game with ID: " + gameId));
         }
+        return "redirect:/";
+    }
+
+    //Prepping for phase 4
+    @PostMapping("/setSqlConnection")
+    public String setSqlConnection(@RequestParam("sql-db-path") String sqldbpath,
+                                   Model model) {
+        //gameManager = new GameManager(sqldbpath);
+        return "redirect:/";
+    }
+
+    private String parseBindingResultErrors(BindingResult bindingResult) {
+        messages = new ArrayList<Message>();
+
+        bindingResult.getAllErrors().forEach(error -> {
+            messages.add(new Message("error", error.getDefaultMessage()));
+        });
         return "redirect:/";
     }
 }

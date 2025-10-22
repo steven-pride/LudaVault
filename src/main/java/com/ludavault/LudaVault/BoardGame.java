@@ -1,5 +1,7 @@
 package com.ludavault.LudaVault;
 
+import jakarta.validation.constraints.*;
+
 /**
  * Steven Pride
  * CEN 3024 - Software Development I
@@ -17,11 +19,27 @@ public class BoardGame {
      *     weight: double - the weight of the game.
      *     isExpansion: boolean - whether the game is an expansion.
      */
+    @NotNull(message = "Game ID must be provided.")
+    @Min(value = 1, message = "Game ID must be greater than or equal to 1.")
     private Integer gameId;
+
+    @NotEmpty(message = "Title cannot be empty.")
     private String title;
+
+    @NotNull(message = "Maximum players must be provided.")
+    @Min(value = 1, message = "Maximum players must be greater than or equal to 1.")
     private Integer maxPlayers;
+
+    @NotNull(message = "Play time must be provided.")
+    @Min(value = 1, message = "Play time must be greater than or equal to 1.")
     private Integer playTime;
+
+    @NotNull(message = "Weight must be provided.")
+    @Min(value = 1, message = "Weight must be between 1 and 5.")
+    @Max(value = 5, message = "Weight must be between 1 and 5.")
     private Double weight;
+
+    @NotNull(message = "Expansion status must be provided.")
     private Boolean isExpansion;
 
     /**

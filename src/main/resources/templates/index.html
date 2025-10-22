@@ -15,13 +15,13 @@
 </head>
 <body>
 <header>
-    <h1>LudaVault -  Board Game Manager</h1>
+    <img src="/LudaVault_Logo.svg" alt="LudaVault - Board Game Manager" width="500px">
 </header>
 <main>
     <section id="upper-section" class="upper-section">
         <div id="bulk-import" class="menu-button">
             <form id="bulk-import-form" method="post" action="/bulkImport" enctype="multipart/form-data">
-                <input type="file" name="file" accept=".txt" />
+                <input id="bulk-import-file-input" type="file" name="file" accept=".txt" />
                 <button type="submit">Bulk Import</button>
             </form>
         </div>
@@ -37,7 +37,7 @@
     <section id="message-center" class="message-center" th:if="${messages != null && !messages.isEmpty()}" th:style="${messages != null && !messages.isEmpty()} ? 'display: grid;' : 'display: none;'">
         <div id="messages">
             <div class="message-container" th:each="message : ${messages}">
-                <span th:class="${message.key == 'success'} ? 'success-message' : (${message.key == 'error'} ? 'error-message' : 'message')" th:text="${message.value}"></span>
+                <span th:class="${message.type == 'success'} ? 'success-message' : (${message.type == 'error'} ? 'error-message' : 'message')" th:text="${message.message}"></span>
             </div>
         </div>
         <div id="close-message-center">
@@ -63,7 +63,7 @@
                         </tr>
                     </thead>
                     <!--Found the rowClicked functionality here: https://stackoverflow.com/questions/27484706/thymeleaf-clickable-row-->
-                    <tr class="game-row" th:each="game : ${games}" th:onclick="'javascript:rowClicked(\'' + ${game.gameId} + '\');'">
+                    <tr th:class="${boardGame.getMaxPlayers() != null && game.gameId == boardGame.gameId} ? 'game-row selected' : 'game-row'" th:each="game : ${games}" th:onclick="'javascript:rowClicked(\'' + ${game.gameId} + '\');'">
                         <td class="game-row-id" th:text="${game.gameId}"></td>
                         <td class="game-row-title" th:text="${game.title}"></td>
                         <td class="game-row-maxPlayers" th:text="${game.maxPlayers}"></td>
@@ -82,7 +82,7 @@
                 <div id="add-game" class="menu-button"><a href="/newGame"><button>New Game</button></a></div>
                 <div id="remove-game" class="menu-button"><a th:href="'/deleteGame?gameId='+${boardGame.getGameId()}"><button>Remove Game</button></a></div>
             </div>
-            <form id="game-form" method="post" th:action="${boardGame.getGameId() == null} ? '/createGame' : '/updateGame'" th:object="${boardGame}">
+            <form id="game-form" method="post" th:action="${boardGame.getMaxPlayers() == null} ? '/createGame' : '/updateGame'" th:object="${boardGame}">
                 <div class="game-form-row">
                 <label for="gameId">Id</label><br>
                 <input type="number" th:min="1" step="1" th:field="*{gameId}" th:value="${maxId + 1}" id="gameId" name="gameId" required />
@@ -105,7 +105,7 @@
                 </div>
                 <div class="game-form-row">
                 <label for="isExpansion">Expansion</label>
-                <input type="checkbox" th:field="*{isExpansion}" id="isExpansion" name="isExpansion" />
+                <input type="checkbox" id="isExpansion" name="isExpansion" th:field="*{isExpansion}" />
                 </div>
                 <div class="game-form-row">
                     <button type="submit" th:text="${boardGame.getMaxPlayers() == null} ? 'Create Game' : 'Update Game'"></button>
